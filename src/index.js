@@ -4,6 +4,9 @@
  * делаем через рекурсию(а других вариантов и нет)
  */
 export const deepEqual = (obj, anotherObject) => {
+
+  //Мой изначальный вариант:
+
   function deepValue(object) {
     return Object.values(object).reduce((accum, value) => {
       if (typeof value === 'object') {
@@ -14,6 +17,15 @@ export const deepEqual = (obj, anotherObject) => {
   }
 
   return deepValue(obj) === deepValue(anotherObject);
+
+  //  После урока (оказалось все намного проще):
+
+  return Object.entries(obj).every(([key, value]) => {
+    if (typeof value === 'object') {
+      return deepEqual(value, anotherObject[key]);
+    }
+    return value === anotherObject[key];
+  });
 };
 
 /**
